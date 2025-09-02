@@ -2,11 +2,14 @@ import mysql from "mysql2/promise";
 
 // Create a connection pool
 export const pool = mysql.createPool({
-  host: "localhost",     // your DB host
-  user: "root",          // your DB username
-  password: "password", // your DB password
-  database: "school_db", // your database name
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
 });
+
+
