@@ -1,0 +1,330 @@
+/* =========================
+   PAGE LAYOUT
+========================= */
+.pageContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 80vh;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* =========================
+   SEARCH HEADER (Search + Button)
+========================= */
+.searchHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.searchSection {
+  
+  flex: 1;
+}
+
+/* --- SEARCH BOX --- */
+.searchBox {
+  flex: 1;
+  min-width: 0;
+}
+
+.searchInputContainer {
+  position: relative;
+  width: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 1rem 3rem 1rem 2.8rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+  color: #111827;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.searchInput::placeholder {
+  color: #9ca3af;
+  font-size: 1rem;
+}
+
+.clearButton {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.clearButton:hover {
+  color: #ee7c7c;
+  background: #fef2f2;
+}
+
+
+/* =========================
+   RESULTS SECTION
+========================= */
+.resultsContainer {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.resultsInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.resultsCount {
+  font-weight: 600;
+  color: #719fef;
+  font-size: 1.1rem;
+}
+
+.noResults {
+  color: #e53e3e;
+  font-style: italic;
+}
+
+
+
+/* =========================
+   SCHOOLS GRID & CARDS
+========================= */
+.schoolsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+  
+}
+
+.schoolCard {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 400px;
+  
+}
+
+.schoolCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.schoolImageContainer {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  background: #f7fafc;
+}
+
+.schoolImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.schoolCard:hover .schoolImage {
+  transform: scale(1.05);
+}
+
+.schoolContent {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.schoolName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #48505e;
+}
+
+.schoolAddress {
+  color: #718096;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+
+.schoolCity {
+  color: #4a5568;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.schoolDetailsBtn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.schoolDetailsBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+.emptyState {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: #718096;
+  font-size: 1.1rem;
+  background: #f7fafc;
+  border-radius: 12px;
+  border: 2px dashed #e2e8f0;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 1.75rem;
+  }
+
+  .searchSection {
+    flex-wrap: nowrap;
+  }
+
+  .schoolsContainer {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageTitle {
+    font-size: 1.5rem;
+  }
+
+.searchBox {
+    max-width: 100%;
+       /* smaller padding */
+    border-radius: 10px;       /* softer radius */
+  }
+
+  .searchInput {
+    font-size: 0.9rem;         /* smaller font */
+  }
+
+  .searchIcon {
+    font-size: 1rem;           /* shrink icon */
+  }
+
+  .schoolsContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .schoolImageContainer {
+    height: 180px;
+  }
+}
+
+/* =========================
+   DARK MODE
+========================= */
+@media (prefers-color-scheme: dark) {
+  .searchHeader {
+    background: #1f2937;
+    border-color: #374151;
+  }
+
+  .pageTitle {
+    color: #f9fafb;
+  }
+
+  .searchInput {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+
+  .searchInput:focus {
+    background: #1f2937;
+    border-color: #3b82f6;
+  }
+
+  .schoolCard {
+    background: #2d3748;
+    border-color: #4b5568;
+  }
+
+  .schoolName {
+    color: #e2e8f0;
+  }
+
+  .schoolAddress {
+    color: #a0aec0;
+  }
+
+  .schoolCity {
+    color: #cbd5e0;
+  }
+
+  .emptyState {
+    background: #2d3748;
+    border-color: #4a5568;
+    color: #a0aec0;
+  }
+}
