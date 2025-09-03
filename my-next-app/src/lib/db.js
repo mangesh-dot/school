@@ -11,7 +11,7 @@ export const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
    ssl: {
-    rejectUnauthorized: true, // Verify server certificate
+    rejectUnauthorized: false, // Verify server certificate
   },
 });
 
