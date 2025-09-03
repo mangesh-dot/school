@@ -3,12 +3,23 @@ import { pool } from "@/lib/db";
 import fs from "fs";
 import path from "path";
 
+// Helper to sanitize file names
+function sanitizeFileName(name) {
+  return name.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9._-]/g, "");
+}
+
 // GET all schools
 export async function GET() {
   try {
     const [rows] = await pool.query("SELECT * FROM schools");
-    return NextResponse.json(rows);
+
+    return NextResponse.json(rows, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
   } catch (err) {
+    console.error("❌ Error in /api/schools GET:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
@@ -35,10 +46,11 @@ export async function POST(req) {
       const uploadDir = path.join(process.cwd(), "public/schoolImages");
       fs.mkdirSync(uploadDir, { recursive: true });
 
-      const filePath = path.join(uploadDir, file.name);
+      const safeFileName = sanitizeFileName(file.name);
+      const filePath = path.join(uploadDir, safeFileName);
       fs.writeFileSync(filePath, buffer);
 
-      imagePath = `/schoolImages/${file.name}`;
+      imagePath = `/schoolImages/${safeFileName}`;
     }
 
     await pool.query(
@@ -46,21 +58,28 @@ export async function POST(req) {
       [name, address, city, state, contact, imagePath, email_id]
     );
 
-    return NextResponse.json({ message: "School added successfully" });
+    return NextResponse.json(
+      { message: "School added successfully", image: imagePath },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
   } catch (err) {
     console.error("❌ Error in /api/schools POST:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
-// Add OPTIONS method for CORS if needed
+// OPTIONS for CORS
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
     },
   });
 }
