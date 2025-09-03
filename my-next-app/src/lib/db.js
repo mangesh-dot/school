@@ -1,4 +1,5 @@
 import mysql from "mysql2/promise";
+import fs from "fs";
 
 // Create a connection pool
 export const pool = mysql.createPool({
@@ -11,7 +12,7 @@ export const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
    ssl: {
-    rejectUnauthorized: true, // Verify server certificate
+    ca: fs.readFileSync("./src/lib/ca.pem"), // Verify server certificate
   },
 });
 
