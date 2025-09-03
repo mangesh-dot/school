@@ -142,12 +142,21 @@ export default function ShowSchools() {
     setFilteredSchools(filtered);
   }, [searchTerm, schools]);
 
-  const getImagePath = (imagePath) => {
-    if (!imagePath) return "/default-school.jpg";
-    if (imagePath.startsWith("http")) return imagePath;
-    // Ensure local paths start with /
-    return imagePath.startsWith("/") ? imagePath : `/${imagePath}`;
-  };
+const getImagePath = (imagePath) => {
+  if (!imagePath) return "/default-school.jpg";
+
+  // If it's already an external URL (Cloudinary, S3, etc.)
+  if (imagePath.startsWith("http")) return imagePath;
+
+  // Render (or any deployed URL) will serve from the same domain
+  // so prefix with the base URL
+  const baseUrl =
+    typeof window !== "undefined"
+      ? window.location.origin
+      : process.env.NEXT_PUBLIC_BASE_URL || "";
+
+  return `${baseUrl}${imagePath.startsWith("/") ? imagePath : `/${imagePath}`}`;
+};
 
   if (loading) {
     return (
